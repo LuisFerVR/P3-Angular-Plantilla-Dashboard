@@ -1,4 +1,4 @@
-import { Component, contentChild, ContentChild, ElementRef, input, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, contentChild, ContentChild, ElementRef, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -12,10 +12,15 @@ import { Component, contentChild, ContentChild, ElementRef, input, ViewEncapsula
     '(click)':'onClick()'
   }
 })
-export class ControlComponent {
+export class ControlComponent implements AfterContentInit{
   label=input.required<string>();
   //@ContentChild('input') private control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>
-private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input')
+  private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
+
+  ngAfterContentInit() {
+    console.log(this.control()?.nativeElement);
+  }
+
   onClick(){
     console.log(this.control());
     
