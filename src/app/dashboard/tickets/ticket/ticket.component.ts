@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { Ticket } from '../ticket.model';
 
 @Component({
@@ -11,11 +11,15 @@ import { Ticket } from '../ticket.model';
 export class TicketComponent {
   data = input.required<Ticket>();
   detailsVisible = signal(false);
-
+  close = output()
   onToggleDetails(){
     //Actualizar una señal sin método update de las señales
     //this.detailsVisible.set(!this.detailsVisible());
     //Alternativa con método update
     this.detailsVisible.update((wasVisible)=>!wasVisible);
+  }
+
+  onMarkAsCompleted(){
+    this.close.emit();
   }
 }
